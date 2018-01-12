@@ -1,4 +1,4 @@
-INCLUDE Test Story
+//INCLUDE Test Story
 
 You moved to a new neighborhood in the same town.
 Examples of meeting:
