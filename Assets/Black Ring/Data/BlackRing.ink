@@ -13,9 +13,9 @@ What are you looking for out of a relationship?
 
 === maggie_opens_up ===
 // Maggie talks about asexuality
-To be honest, I think finding your best friend, whom you love and cherish, and can walk through life together... That's one of the hardest and most rewarding things life can offer. 
+To be honest, I think finding your best friend, whom you love and cherish, and can walk through life together... That's one of the hardest and most rewarding things life can offer. #head_laugh
 
-But I wouldn't say that I consider relationships like most people do. It's a little hard for me to talk about openly...
+But I wouldn't say that I consider relationships like most people do. It's a little hard for me to talk about openly... #head_neutral
 
 * That's ok - I'm a good listener. -> good_listener
 
@@ -32,11 +32,11 @@ Well, it means that I really don't get anything out of sex. Personally. What it 
 -> good_listener_okiedokie
 
 === good_listener_okiedokie ===
-Okiedokie then. 
+Okiedokie then. #head_disapprove
 -> END.
 
 === good_listener_silence ===
-Hey, you said you were a good listener! Why the silence...
+Hey, you said you were a good listener! Why the silence... #head_sad
 * You snap out of it. OH man I'm sorry. I just was really really surprised. Because... I'm actually asexual too. -> asexual_love
 * I honestly just wasn't expecting that. I can't say I know very much about it. But I'm willing to learn. -> sex_importance
 
