@@ -1317,12 +1317,12 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
-  m_inputSource: 0
+  m_isInputParsingRequired: 1
+  m_inputSource: 2
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
@@ -2115,6 +2115,7 @@ GameObject:
   - component: {fileID: 1857410413}
   - component: {fileID: 1857410412}
   - component: {fileID: 1857410411}
+  - component: {fileID: 1857410414}
   m_Layer: 5
   m_Name: NameTag
   m_TagString: Untagged
@@ -2193,6 +2194,21 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1857410409}
+--- !u!114 &1857410414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1857410409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb16d4820f3d4102838cc6bde9b3cf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reader: {fileID: 166776979}
+  textComponent: {fileID: 925963644}
+  currentName: Maggie
+  IsShowingText: 0
 --- !u!1 &1981155158
 GameObject:
   m_ObjectHideFlags: 0
