@@ -1571,7 +1571,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 21f3d4a069f9a48df82a185b26fa2114, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ea29955bf5e2abb44ac25a32caabd5e1, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1600,10 +1600,16 @@ MonoBehaviour:
   imageComponent: {fileID: 1171211646}
   tagPrefix: background
   sprites:
+  - tagSuffix: apartment1
+    sprite: {fileID: 21300000, guid: ea29955bf5e2abb44ac25a32caabd5e1, type: 3}
+  - tagSuffix: bus
+    sprite: {fileID: 21300000, guid: 8cce13dbb4bcfff46b681237965b9143, type: 3}
+  - tagSuffix: cafe
+    sprite: {fileID: 21300000, guid: 439b39397586bf34aab503039f702fbb, type: 3}
   - tagSuffix: park
-    sprite: {fileID: 21300000, guid: 21f3d4a069f9a48df82a185b26fa2114, type: 3}
-  - tagSuffix: bench
-    sprite: {fileID: 21300000, guid: d4f1f28c670fd479c88d26b0f54949f1, type: 3}
+    sprite: {fileID: 21300000, guid: bff71650098d2034fa7fe052e1506147, type: 3}
+  - tagSuffix: restaurant
+    sprite: {fileID: 21300000, guid: 3bbe389924aca744293d71649559c862, type: 3}
 --- !u!1 &1256094543
 GameObject:
   m_ObjectHideFlags: 0
