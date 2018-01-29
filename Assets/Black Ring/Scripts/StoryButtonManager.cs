@@ -4,31 +4,30 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class StoryButtonManager : MonoBehaviour {
-	public StoryReading.StoryReader reader;
-	public StoryButton buttonPrefab;
-	public RectTransform buttonContainer;
-
-	[SerializeField] List<StoryButton> createdButtons;
+	[SerializeField] StoryReading.StoryReader reader;
+	[SerializeField] List<StoryButton> buttons;
 
 	public void Awake() {
 		reader.storyOptionsEncountered.AddListener( OnStoryOptionsEncountered );
+
+		for( int buttonIndex = 0; buttonIndex < buttons.Count; ++buttonIndex ) {
+			buttons[buttonIndex].BindOption( reader, buttonIndex );
+		}
 	}
 
 	public void OnStoryOptionsEncountered(List<string> optionTexts) {
-		for (int buttonIndex = createdButtons.Count; buttonIndex < optionTexts.Count; ++buttonIndex) {
-			StoryButton newButton = Instantiate<StoryButton>( buttonPrefab, buttonContainer );
-			createdButtons.Add( newButton );
-			int capturedButtonIndex = buttonIndex;
-			newButton.onClick.AddListener( ()=>{ reader.ChooseOption( capturedButtonIndex ); } );
+		if( optionTexts.Count > buttons.Count ) {
+			Debug.LogWarning( string.Format( "Not enough buttons to display the current number of options. Need %i, have %i.", optionTexts.Count, buttons.Count ) );
 		}
 
-		for (int buttonIndex = 0; buttonIndex < createdButtons.Count; ++buttonIndex) {
+		for (int buttonIndex = 0; buttonIndex < buttons.Count; ++buttonIndex) {
 			if (buttonIndex < optionTexts.Count) {
-				createdButtons[buttonIndex].gameObject.SetActive( true );
-				createdButtons[buttonIndex].text = optionTexts[buttonIndex];
+				buttons[buttonIndex].gameObject.SetActive( true );
+				buttons[buttonIndex].text = optionTexts[buttonIndex];
 
 			} else {
-				createdButtons[buttonIndex].gameObject.SetActive( false );
+				buttons[buttonIndex].gameObject.SetActive( false );
+				buttons[buttonIndex].text = "[NO OPTION]";
 			}
 		}
 	}
