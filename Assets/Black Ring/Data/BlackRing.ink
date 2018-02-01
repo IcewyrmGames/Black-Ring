@@ -1,9 +1,9 @@
 //It’ Monday morning. 8:05am to be exact. Grogginess clouds your head and clutches your mind as you stumble into the bus and take a seat by the window. You groan internally as you lightly plop your head against the glass.
 
-Welcome to our demo.
+Welcome to our demo.  #name:
 
 //* Plop. -> plop
-* Start! -> park_hand_hold
+* [Start!] -> park_hand_hold
 
 == plop
 “Rough Night?” 
@@ -93,75 +93,83 @@ You reach for your wallet, but she already has the check in hand. "I've got it,"
 * Continue walking. -> park_walking
 
 == park_hand_hold
-She grasps your hand in hers as you reach for it. You notice her hand is cool to the touch. Lightly at first, and as though hestitating, she slowly grasps your hand more firmly.
+She grasps your hand in hers as you reach for it. You notice her hand is cool to the touch. Lightly at first, and as though hestitating, she slowly grasps your hand more firmly.  #head_suprise #name: 
 -> asexual_talk
 
 == asexual_talk
-"Listen... I need to talk to you about something." 
-* "Sure, anything." -> asexual_talk2
+"Listen... I need to talk to you about something."  #head_sad #name:Maggie 
+* ["Sure, anything."] -> asexual_talk2 #name:Maggie
 
 == asexual_talk2
-"I really like you, and I'd like to continue going out, but I want to make sure we understand each other right, you know?"
-* "Uh Oh," []you think internally, not entirely sure where this is heading. -> asexual_talk_do_you_know
+"I really like you, and I'd like to continue going out, but I want to make sure we understand each other right, you know?" #head_suprise #name:Maggie
+* "Uh Oh," []you think internally, not entirely sure where this is heading. -> asexual_talk_do_you_know #head_sad #name:
 
 == asexual_talk_do_you_know
-"Well... I'm asexual. I'm not sure if you know what that means, but it's something you should know about me if you are interested in dating. If you have any questions, let me know, and I'll answer anything."
-* "I don't really know["] what that means. Can you explain it to me?" -> asexual_talk_explain_asexuality
-* "I'm familiar with [it"] the term, but that can mean a lot of different things. What does that mean for you?" -> asexual_talk_explain_for_maggie
+"Well... I'm asexual. I'm not sure if you know what that means, but it's something you should know about me if you are interested in dating. If you have any questions, let me know, and I'll answer anything." #head_neutral #name:Maggie
+* "I don't really know["] what that means. Can you explain it to me?" -> asexual_talk_explain_asexuality #head_neutral #name:
+* "I'm familiar with [it"] the term, but that can mean a lot of different things. What does that mean for you?" -> asexual_talk_explain_for_maggie #head_neutral #name:
 
 == asexual_talk_explain_asexuality
-"Okay. So. Asexual can mean a lot of different things- but to some degree it refers to not experiencing sexual attraction."
+"Okay. So. Asexual can mean a lot of different things- but to some degree it refers to not experiencing sexual attraction."  #head_neutral #name:Maggie
 -> asexual_talk_explain_for_maggie
 
 == asexual_talk_explain_for_maggie
-"I personally am asexual, but also romantic. Which can make dating a little hard for me. Because although I want to fall in love and find a partner, for many people, sex and love are pieces to the whole. For me, those are two entirely separate things."
-* "Okay. That makes sense." -> asexual_talk_do_you_have_any_questions 
+"I personally am asexual, but also romantic. Which can make dating a little hard for me." #head_laugh #name:Maggie
+"Although I want to fall in love and find a partner, for many people, sex and love are pieces to the whole. For me, those are two entirely separate things."  #head_neutral #name:Maggie
+* ["Okay. That makes sense."] -> asexual_talk_do_you_have_any_questions  #name:Maggie
 
 == asexual_talk_do_you_have_any_questions
-"{ I really am happy to answer questions though. Do you have a|Do you have a|A}ny more questions?"
-* { not asexual_talk_q1 } "Sure.. If you don't mind me asking, how did you discover this about youself?" -> asexual_talk_q1
-* { not asexual_talk_q2 } "Is it only sex? Or is it any physical touch?" -> asexual_talk_q2
-* "I don't have any more questions." -> asexual_talk_no_more_questions
+"{ I really am happy to answer questions though. Do you have a|Do you have a|A}ny more questions?"  #head_neutral #name:Maggie
+* { not asexual_talk_q1 } ["Sure.. If you don't mind me asking, how did you discover this about youself?"] -> asexual_talk_q1 #head_sad #name:Maggie
+* { not asexual_talk_q2 } ["Is it only sex? Or is it any physical touch?"] -> asexual_talk_q2 #head_laugh #name:Maggie
+* ["I don't have any more questions."] -> asexual_talk_no_more_questions #name:Maggie
 
 == asexual_talk_q1
-"Well... it actually took me a long time to figure out. I had never heard about asexuality when I was young, so I always assumed that sex was something that everybody got interested in as they got older." 
-* "And you never did?" -> asexual_talk_q1_p2
+"Well... it actually took me a long time to figure out. I had never heard about asexuality when I was young, so I always assumed that sex was something that everybody got interested in as they got older." #head_sad #name:Maggie
+* ["And you never did?"] -> asexual_talk_q1_p2 #head_sad #name:Maggie 
 
 == asexual_talk_q1_p2
-"I mean, I kinda did - but not really. It's like I tried to talk myself into being interested in it. And... I fell in love. It's something I thought would come naturally. And for the longest time, I thought something was wrong with me, because I - I loved him. But sex was just going through the motions. It wasn't something I ever enjoyed, and that feeling never came."
-* "So then... you have, you know, tried it then?" -> asexual_talk_q1_p3 
+"I mean, I kinda did - but not really. It's like I tried to talk myself into being interested in it. And... I fell in love. It's something I thought would come naturally. "  #head_sad #name:Maggie
+"For the longest time, I thought something was wrong with me, because I - I loved him. But sex was just going through the motions. It wasn't something I ever enjoyed, and that feeling never came." #head_sad #name:Maggie
+* ["So then... you have, you know, tried it then?"] -> asexual_talk_q1_p3  #head_laugh #name:Maggie
 
 == asexual_talk_q1_p3
-"What, sex?" She laughs. "Yeah, I did. Try it. For over 3 years. Then I just couldn't do it anymore - and my relationship fell apart. We both wanted different things, but unfortunately, we discovered it too late. I was young, and put a lot of pressure on myself. I wish I knew this was a thing when I was younger. It would have saved me a lot of heartache." 
+"What, sex?" She laughs. "Yeah, I did. Try it. For over 3 years." #head_laugh #name:Maggie
+-> asexual_talk_q1_q3_p4
 
-* "That must have been rough." ->asexual_talk_q1_p4
+== asexual_talk_q1_q3_p4
+"Then I just couldn't do it anymore - and my relationship fell apart. We both wanted different things, but unfortunately, we discovered it too late."  #head_sad #name:Maggie
+"I was young, and put a lot of pressure on myself. I wish I knew this was a thing when I was younger. It would have saved me a lot of heartache." #head_sad #name:Maggie
+* ["That must have been rough."] ->asexual_talk_q1_p5 #head_sad #name:Maggie
 
-== asexual_talk_q1_p4
-"Yeah, it was. I thought for sure the feelings would come with him. But after that, I stopped second-guessing myself and allowed myself to just be. And it was a huge weight off my shoulders when I finally just accepted it." 
+== asexual_talk_q1_p5
+"Yeah, it was. I thought for sure the feelings would come with him." #head_sad #name:Maggie
+"But after that, I stopped second-guessing myself and allowed myself to just be." #head_neutral #name:Maggie
+"And it was a huge weight off my shoulders when I finally just accepted it." #head_laugh #name:Maggie
 -> asexual_talk_do_you_have_any_questions
 
 == asexual_talk_q2
-"For me, honestly, it's just sex. I still like cuddling. I love hugs. I'm a big hugger. I like the feeling of closeness. But I know I don't want sex - and I don't want to start a relationship unless that is understood. I don't want to date having different expectations. That's a recipe for disaster."
+"For me, honestly, it's just sex. I still like cuddling. I love hugs. I'm a big hugger. I like the feeling of closeness." #head_laugh #name:Maggie
+"But I know I don't want sex - and I don't want to start a relationship unless that is understood. I don't want to date having different expectations. That's a recipe for disaster." #head_neutral #name:Maggie
 -> asexual_talk_do_you_have_any_questions
 
 == asexual_talk_no_more_questions
-"Guess it's my turn then. What are your thoughts on everything? How do you feel about it?"
+"Guess it's my turn then. What are your thoughts on everything? How do you feel about it?" #name:Maggie
 -> premature_end
 //* [Need More Time] "I guess I'd need more time to think about it." -> asexual_talk_more_time
 //* [Also Asexual] "I'm actually asexual as well. I've never dated anyone else who is!" -> asexual_talk_both_asexual
 //* [Dealbreaker] "To be honest, I really like you Maggie, but I'm not sure that I would feel happy long term in a relationship without sex."  -> asexual_talk_dealbreaker
 
 == asexual_talk_more_time
-She pauses. "I understand.". she looks at you and smiles. "Let me know once you've had time to think it over."
--> premature_end
+She pauses. "I understand.". she looks at you and smiles. "Let me know once you've had time to think it over." #name:Maggie
+*["Definitely."]-> premature_end 
 
 == premature_end
-\---
-\---
-THANK YOU FOR PLAYING!
+#name: Icewyrm Games
+THANK YOU FOR PLAYING! #name: Icewyrm Games
 
-It seems we've run out of content for this demo. Let us know if you enjoyed it, we'd love to hear feedback!
-Please check out our page at www.icewyrm.games and like us on Facebook at facebook.com/icewyrmgames!
+It seems we've run out of content in this little demo. Let us know if you enjoyed it, we'd love to hear feedback! #name: Icewyrm Games
+Like us on Facebook at facebook.com/icewyrmgames! #name: Icewyrm Games
 
 -> END.
 
