@@ -1,24 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Ink.Runtime;
 
 public class StoryPanelSwitcher : MonoBehaviour {
-	public StoryReading.StoryReader reader;
+	public IceWyrm.StoryReader reader;
 	public GameObject textPanel;
-	public GameObject optionsPanel;
+	public GameObject choicesPanel;
 
 	public void Awake() {
-		reader.storyTextEncountered.AddListener( (string s)=>{ SwitchToTextPanel(); } );
-		reader.storyOptionsEncountered.AddListener( (List<string> o)=>{ SwitchToOptionsPanel(); } );
+		reader.storyTextEncountered.AddListener((string s)=>{ SwitchToTextPanel(); });
+		reader.storyChoicesEncountered.AddListener((List<Choice> c)=>{ SwitchToChoicesPanel(); });
 	}
 
 	void SwitchToTextPanel() {
-		textPanel.SetActive( true );
-		optionsPanel.SetActive( false );
+		textPanel.SetActive(true);
+		choicesPanel.SetActive(false);
 	}
 
-	void SwitchToOptionsPanel() {
-		textPanel.SetActive( false );
-		optionsPanel.SetActive( true );
+	void SwitchToChoicesPanel() {
+		textPanel.SetActive(false);
+		choicesPanel.SetActive(true);
 	}
 }

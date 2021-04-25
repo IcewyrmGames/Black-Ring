@@ -6,7 +6,7 @@ using Ink.Runtime;
 // This is a super bare bones example of how to play and display a ink story in Unity.
 public class BasicInkExample : MonoBehaviour {
     public static event Action<Story> OnCreateStory;
-	
+
     void Awake () {
 		// Remove the default message
 		RemoveChildren();
@@ -19,14 +19,14 @@ public class BasicInkExample : MonoBehaviour {
         if(OnCreateStory != null) OnCreateStory(story);
 		RefreshView();
 	}
-	
+
 	// This is the main function called every time the story changes. It does a few things:
 	// Destroys all the old content and choices.
 	// Continues over all the lines of text, then displays all the choices. If there are no choices, the story is finished!
 	void RefreshView () {
 		// Remove all the UI on screen
 		RemoveChildren ();
-		
+
 		// Read all the content until we can't continue any more
 		while (story.canContinue) {
 			// Continue gets the next line of the story
@@ -75,7 +75,7 @@ public class BasicInkExample : MonoBehaviour {
 		// Creates the button from a prefab
 		Button choice = Instantiate (buttonPrefab) as Button;
 		choice.transform.SetParent (canvas.transform, false);
-		
+
 		// Gets the text from the button prefab
 		Text choiceText = choice.GetComponentInChildren<Text> ();
 		choiceText.text = text;

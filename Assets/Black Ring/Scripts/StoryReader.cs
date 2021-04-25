@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using Ink.Runtime;
 using System.Collections.Generic;
 
-namespace StoryReading {
+namespace IceWyrm {
 	[System.Serializable]
 	public class ReaderEvent : UnityEvent<StoryReader> {}
 	[System.Serializable]
@@ -11,28 +11,21 @@ namespace StoryReading {
 	[System.Serializable]
 	public class StringListEvent : UnityEvent<List<string>> {}
 	[System.Serializable]
+	public class ChoiceListEvent : UnityEvent<List<Choice>> {}
+	[System.Serializable]
 	public class IntEvent : UnityEvent<int> {}
 
 	public class StoryReader : MonoBehaviour, ISerializationCallbackReceiver {
-		//The JSON text file that describes the story
-		[SerializeField] TextAsset _storyJSON;
-		public TextAsset jsonText {get {return _storyJSON;}}
+		//The compiled JSON text file that describes the story
+		[SerializeField] TextAsset compiledStory;
 
 		//Should the story play automatically when starting?
-		[SerializeField] bool _playOnStart = true;
-		//Should we require a step between showing some text, then showing a list of the options? Or should we always immediately go to the options when we have them.
-		[SerializeField] bool _stepBetweenTextAndOptions = true;
+		[SerializeField] bool playOnStart = true;
 		//Should we use a maximal continue, which will add up all the text until the next option when we do a single step?
-		[SerializeField] bool _useMaximalContinue = false;
+		[SerializeField] bool useMaximalContinue = false;
 
-		[SerializeField, HideInInspector] bool _isPlaying;
-		public bool isPlaying {get {return _isPlaying;}}
-
-		Story _inkStory;
-		public Story currentStory {get {return _inkStory;}}
-
-		//Fired when a new story opject is loaded
-		public ReaderEvent newStoryLoaded;
+		//The story object that is executing the Ink story
+		Story story;
 
 		//Fired when a story begins playing
 		public ReaderEvent storyStarted;
@@ -44,82 +37,66 @@ namespace StoryReading {
 		//Fired when some tags are encountered in the story
 		public StringListEvent storyTagsEncountered;
 
-		//Fired when the next step in a story is to select an option
-		public StringListEvent storyOptionsEncountered;
+		//Fired when the next step in a story is to select a choice
+		public ChoiceListEvent storyChoicesEncountered;
 		//Fired when an option is chosen in a story
 		public IntEvent storyOptionChosen;
 
-		[SerializeField, HideInInspector] string _serializedData;
+		[SerializeField, HideInInspector] string serializedData;
 
-		List<string> _currentChoicesText = new List<string>( 10 );
+		public void Start() {
+			if (compiledStory) {
+				story = new Story(compiledStory.text);
+				story.onError += OnInkError;
 
-		void Start() {
-			if (_storyJSON) LoadStory(_storyJSON, _playOnStart);
-		}
-
-		public void LoadStory(TextAsset storyJSON, bool playImmediately) {
-			_storyJSON = storyJSON;
-			_isPlaying = false;
-
-			_inkStory = new Story(_storyJSON.text);
-			newStoryLoaded.Invoke( this );
-
-			if (playImmediately) {
-				PlayStory();
+				if (playOnStart) {
+					NextStep();
+				}
 			}
 		}
 
-		public void PlayStory() {
-			if (_isPlaying) return;
-			_isPlaying = true;
-			storyStarted.Invoke( this );
-		}
-
 		public void NextStep() {
-			if (_inkStory.canContinue) {
-				if( _useMaximalContinue ) _inkStory.ContinueMaximally();
-				else _inkStory.Continue();
+			if (story.canContinue) {
+				if (useMaximalContinue) story.ContinueMaximally();
+				else story.Continue();
 
-				if( _inkStory.currentTags.Count > 0 )
-					storyTagsEncountered.Invoke( _inkStory.currentTags );
-				storyTextEncountered.Invoke( _inkStory.currentText );
+				if (story.currentTags.Count > 0)
+					storyTagsEncountered.Invoke(story.currentTags);
+				storyTextEncountered.Invoke(story.currentText);
 
-				//Recurse to the next step if the next step won't result in more text
-				if (!_inkStory.canContinue && !_stepBetweenTextAndOptions) {
-					NextStep();
-				}
-
-			} else if (_inkStory.currentChoices.Count > 0) {
-				_currentChoicesText.Clear();
-				for (int i = 0; i < _inkStory.currentChoices.Count; i++) {
-					_currentChoicesText.Add( _inkStory.currentChoices[i].text );
-				}
-				storyOptionsEncountered.Invoke( _currentChoicesText );
+			} else if (story.currentChoices.Count > 0) {
+				storyChoicesEncountered.Invoke(story.currentChoices);
 
 			} else {
-				storyEnded.Invoke( this );
+				storyEnded.Invoke(this);
 			}
 		}
 
 		public void ChooseOption(int index) {
-			if (_inkStory.currentChoices.Count > 0) {
-				_inkStory.ChooseChoiceIndex(index);
+			if (story.currentChoices.Count > 0) {
+				story.ChooseChoiceIndex(index);
 				NextStep();
 			} else {
 				Debug.LogWarning("Cannot choose option, there are no current options");
 			}
 		}
 
+		void OnInkError(string message, Ink.ErrorType type) {
+			if (type == Ink.ErrorType.Warning) Debug.LogWarning(message);
+			else Debug.LogError(message);
+		}
+
 		void ISerializationCallbackReceiver.OnBeforeSerialize() {
-			if (_inkStory != null) _serializedData = _inkStory.state.ToJson();
-			else _serializedData = null;
+			if (story != null) serializedData = story.state.ToJson();
+			else serializedData = null;
 		}
 
 		void ISerializationCallbackReceiver.OnAfterDeserialize() {
-			if (_storyJSON && !string.IsNullOrEmpty(_serializedData)) {
-				_inkStory = new Story(_storyJSON.text);
-				_inkStory.state.LoadJson(_serializedData);
+			if (compiledStory && !string.IsNullOrEmpty(serializedData)) {
+				story = new Story(compiledStory.text);
+				story.onError += OnInkError;
+				story.state.LoadJson(serializedData);
 			}
 		}
-    }
+	}
 }

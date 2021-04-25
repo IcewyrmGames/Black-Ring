@@ -10,7 +10,7 @@ public class StoryTagImageSwitcher : MonoBehaviour {
 		public Sprite sprite;
 	}
 
-	public StoryReading.StoryReader reader;
+	public IceWyrm.StoryReader reader;
 	public Image imageComponent;
 	public string tagPrefix;
 	public SpriteNamePair[] sprites;
@@ -18,12 +18,12 @@ public class StoryTagImageSwitcher : MonoBehaviour {
 	static char[] tagSplitSeparator = new char[]{ '_' };
 
 	public void Awake() {
-		reader.storyTagsEncountered.AddListener( OnTagsEncountered );
+		reader.storyTagsEncountered.AddListener(OnTagsEncountered);
 	}
 
 	public void OnTagsEncountered(List<string> tags) {
-		foreach( string tag in tags) {
-			string[] splitTag = tag.Split( tagSplitSeparator );
+		foreach (string tag in tags) {
+			string[] splitTag = tag.Split(tagSplitSeparator);
 
 			if (splitTag.GetLength(0) != 2) return;
 

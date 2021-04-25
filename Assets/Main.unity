@@ -420,29 +420,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db97b4063ff604923abdb7892d52ffdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _storyJSON: {fileID: 4900000, guid: 48b3f29fe72cf4945b5fa1a14f585c66, type: 3}
+  compiledStory: {fileID: 4900000, guid: 48b3f29fe72cf4945b5fa1a14f585c66, type: 3}
   _playOnStart: 1
   _stepBetweenTextAndOptions: 1
   _useMaximalContinue: 0
-  _isPlaying: 0
-  newStoryLoaded:
-    m_PersistentCalls:
-      m_Calls: []
   storyStarted:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 166776979}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: NextStep
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   storyEnded:
     m_PersistentCalls:
       m_Calls: []
@@ -464,13 +448,13 @@ MonoBehaviour:
   storyTagsEncountered:
     m_PersistentCalls:
       m_Calls: []
-  storyOptionsEncountered:
+  storyChoicesEncountered:
     m_PersistentCalls:
       m_Calls: []
   storyOptionChosen:
     m_PersistentCalls:
       m_Calls: []
-  _serializedData: 
+  serializedData: 
 --- !u!4 &166776980
 Transform:
   m_ObjectHideFlags: 0
@@ -500,6 +484,7 @@ MonoBehaviour:
   reader: {fileID: 166776979}
   textPanel: {fileID: 1480574485}
   optionsPanel: {fileID: 934219257}
+  choicesPanel: {fileID: 934219257}
 --- !u!1001 &236319488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1464,7 +1449,7 @@ GameObject:
   - component: {fileID: 934219262}
   - component: {fileID: 934219263}
   m_Layer: 5
-  m_Name: OptionsPanel
+  m_Name: ChoicesPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2437,7 +2422,7 @@ MonoBehaviour:
   reader: {fileID: 166776979}
   textComponent: {fileID: 925963644}
   currentName: Maggie
-  IsShowingText: 0
+  isShowingText: 0
 --- !u!114 &1857410415
 MonoBehaviour:
   m_ObjectHideFlags: 0

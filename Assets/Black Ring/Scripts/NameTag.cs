@@ -2,53 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Ink.Runtime;
 
 public class NameTag : MonoBehaviour {
-	[SerializeField] StoryReading.StoryReader reader;
+	[SerializeField] IceWyrm.StoryReader reader;
 	[SerializeField] TMP_Text textComponent;
 
 	public string currentName;
 
-	[SerializeField, HideInInspector] bool IsShowingText = false;
+	[SerializeField, HideInInspector] bool isShowingText = false;
 
 	public void Awake() {
-		reader.storyTagsEncountered.AddListener( OnTagsEncountered );
-		reader.storyTextEncountered.AddListener( OnTextShowing );
-		reader.storyOptionsEncountered.AddListener( OnOptionsShowing );
+		reader.storyTagsEncountered.AddListener(OnTagsEncountered);
+		reader.storyTextEncountered.AddListener(OnTextShowing);
+		reader.storyChoicesEncountered.AddListener(OnChoicesShowing);
 	}
 
 	public void OnValidate() {
-		if( textComponent ) {
-			textComponent.SetText( currentName );
+		if (textComponent) {
+			textComponent.SetText(currentName);
 		}
 	}
 
 	void RefreshDisplay() {
-		if( IsShowingText && !string.IsNullOrEmpty( currentName ) ) {
-			textComponent.SetText( currentName );
-			gameObject.SetActive( true );
+		if (isShowingText && !string.IsNullOrEmpty(currentName)) {
+			textComponent.SetText(currentName);
+			gameObject.SetActive(true);
 		} else {
-			gameObject.SetActive( false );
+			gameObject.SetActive(false);
 		}
 	}
 
-	void OnTagsEncountered( List<string> tags ) {
-		foreach( string tag in tags ) {
-			if( tag.StartsWith( "name:" ) ) {
-				currentName = tag.Substring( 5 );
+	void OnTagsEncountered(List<string> tags) {
+		foreach (string tag in tags) {
+			if (tag.StartsWith("name:")) {
+				currentName = tag.Substring(5);
 				RefreshDisplay();
 				return;
 			}
 		}
 	}
 
-	void OnTextShowing( string text ) {
-		IsShowingText = true;
+	void OnTextShowing(string text) {
+		isShowingText = true;
 		RefreshDisplay();
 	}
 
-	void OnOptionsShowing( List<string> optionTexts ) {
-		IsShowingText = false;
+	void OnChoicesShowing(List<Choice> optionTexts) {
+		isShowingText = false;
 		RefreshDisplay();
 	}
 }
