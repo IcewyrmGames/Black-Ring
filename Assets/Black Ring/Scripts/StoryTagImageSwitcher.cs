@@ -10,19 +10,14 @@ public class StoryTagImageSwitcher : MonoBehaviour {
 		public Sprite sprite;
 	}
 
-	public IceWyrm.StoryReader reader;
 	public Image imageComponent;
 	public string tagPrefix;
 	public SpriteNamePair[] sprites;
 
 	static char[] tagSplitSeparator = new char[]{ '_' };
 
-	public void Awake() {
-		reader.storyTagsEncountered.AddListener(OnTagsEncountered);
-	}
-
-	public void OnTagsEncountered(List<string> tags) {
-		foreach (string tag in tags) {
+	public void OnStoryUpdated(IceWyrm.StoryView view) {
+		foreach (string tag in view.tags) {
 			string[] splitTag = tag.Split(tagSplitSeparator);
 
 			if (splitTag.GetLength(0) != 2) return;

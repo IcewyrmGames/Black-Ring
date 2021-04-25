@@ -4,19 +4,8 @@ using Ink.Runtime;
 using System.Collections.Generic;
 
 namespace IceWyrm {
-	[System.Serializable]
-	public class ReaderEvent : UnityEvent<StoryReader> {}
-	[System.Serializable]
-	public class StringEvent : UnityEvent<string> {}
-	[System.Serializable]
-	public class StringListEvent : UnityEvent<List<string>> {}
-	[System.Serializable]
-	public class ChoiceListEvent : UnityEvent<List<Choice>> {}
-	[System.Serializable]
-	public class IntEvent : UnityEvent<int> {}
-
 	public class StoryReader : MonoBehaviour, ISerializationCallbackReceiver {
-		//The compiled JSON text file that describes the story
+		//The compiled JSON text that describes the story
 		[SerializeField] TextAsset compiledStory;
 
 		//Should the story play automatically when starting?
@@ -26,59 +15,81 @@ namespace IceWyrm {
 
 		//The story object that is executing the Ink story
 		Story story;
+		//The current choices, which are parsed from the story
+		List<StoryChoice> choices = new List<StoryChoice>();
 
-		//Fired when a story begins playing
-		public ReaderEvent storyStarted;
-		//Fired when a story has finished playing
-		public ReaderEvent storyEnded;
+		//Fired when the story is updated in some way
+		public StoryViewEvent storyUpdated;
+		//Fired when the story reaches a point where there is nowhere left to go
+		public UnityEvent storyEnded;
 
-		//Fired when the next step in a story is some text to display
-		public StringEvent storyTextEncountered;
-		//Fired when some tags are encountered in the story
-		public StringListEvent storyTagsEncountered;
-
-		//Fired when the next step in a story is to select a choice
-		public ChoiceListEvent storyChoicesEncountered;
-		//Fired when an option is chosen in a story
-		public IntEvent storyOptionChosen;
-
-		[SerializeField, HideInInspector] string serializedData;
+#if UNITY_EDITOR
+		//Data used to hot-reload the story state when working in the editor
+		[SerializeField, HideInInspector] string reloadStoryText;
+		[SerializeField, HideInInspector] string reloadSerializedData;
+#endif
 
 		public void Start() {
-			if (compiledStory) {
-				story = new Story(compiledStory.text);
-				story.onError += OnInkError;
-
+			if (InitStory(compiledStory.text)) {
 				if (playOnStart) {
-					NextStep();
+					Continue();
 				}
+
+#if UNITY_EDITOR
+				reloadStoryText = compiledStory.text;
+#endif
 			}
 		}
 
-		public void NextStep() {
+		//Continue the current thread of the story. Broadcasts information about the new position in the story.
+		public void Continue() {
+			choices.Clear();
+
+			//canContinue means we can generate more story text, so if that's the case we'll update with new text and tags but not choices
 			if (story.canContinue) {
 				if (useMaximalContinue) story.ContinueMaximally();
 				else story.Continue();
 
-				if (story.currentTags.Count > 0)
-					storyTagsEncountered.Invoke(story.currentTags);
-				storyTextEncountered.Invoke(story.currentText);
+				StoryView view = new StoryView(story.currentText, story.currentTags, choices);
+				storyUpdated.Invoke(view);
 
+			//If we can't continue but have choices, we're waiting to select a choice. This information won't change until a choice is actually selected.
 			} else if (story.currentChoices.Count > 0) {
-				storyChoicesEncountered.Invoke(story.currentChoices);
+				//Collect minimal information about the choices we have right now
+				foreach (Choice choice in story.currentChoices) {
+					choices.Add(new StoryChoice(choice.text, choice.index));
+				}
 
+				StoryView view = new StoryView(story.currentText, story.currentTags, choices);
+				storyUpdated.Invoke(view);
+
+			//We can't continue and have no choices, so the story has reached the end of a branch.
 			} else {
-				storyEnded.Invoke(this);
+				storyEnded.Invoke();
 			}
 		}
 
-		public void ChooseOption(int index) {
+		public void ChooseChoice(int index) {
 			if (story.currentChoices.Count > 0) {
 				story.ChooseChoiceIndex(index);
-				NextStep();
+				Continue();
 			} else {
-				Debug.LogWarning("Cannot choose option, there are no current options");
+				Debug.LogWarning("Attempted to choose choice while there are no current choices. Nothing will happen.");
 			}
+		}
+
+		public void JumpToStitch(string stitch) {
+			story.ChoosePathString(stitch);
+		}
+
+		//Create a new story object for the compiled story, which will reset all state and progress.
+		bool InitStory(string text) {
+			if (!string.IsNullOrEmpty(text)) {
+				story = new Story(text);
+				story.onError += OnInkError;
+				return true;
+			}
+			return false;
 		}
 
 		void OnInkError(string message, Ink.ErrorType type) {
@@ -87,16 +98,23 @@ namespace IceWyrm {
 		}
 
 		void ISerializationCallbackReceiver.OnBeforeSerialize() {
-			if (story != null) serializedData = story.state.ToJson();
-			else serializedData = null;
+#if UNITY_EDITOR
+			if (story != null) {
+				reloadSerializedData = story.state.ToJson();
+			} else {
+				reloadSerializedData = null;
+			}
+#endif
 		}
 
 		void ISerializationCallbackReceiver.OnAfterDeserialize() {
-			if (compiledStory && !string.IsNullOrEmpty(serializedData)) {
-				story = new Story(compiledStory.text);
-				story.onError += OnInkError;
-				story.state.LoadJson(serializedData);
+#if UNITY_EDITOR
+			if (InitStory(reloadStoryText)) {
+				if (!string.IsNullOrEmpty(reloadSerializedData)) {
+					story.state.LoadJson(reloadSerializedData);
+				}
 			}
+#endif
 		}
 	}
 }

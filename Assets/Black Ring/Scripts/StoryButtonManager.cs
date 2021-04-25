@@ -8,24 +8,20 @@ public class StoryButtonManager : MonoBehaviour {
 	[SerializeField] IceWyrm.StoryReader reader;
 	[SerializeField] List<StoryButton> buttons;
 
-	public void Awake() {
-		reader.storyChoicesEncountered.AddListener(OnStoryChoicesEncountered);
+	public void OnStoryUpdated(IceWyrm.StoryView view) {
+		//Do nothing if we don't have choices right now.
+		if (view.choices.Count == 0) return;
 
-		for (int buttonIndex = 0; buttonIndex < buttons.Count; ++buttonIndex) {
-			buttons[buttonIndex].ButtonClicked = OnButtonClicked;
-		}
-	}
-
-	public void OnStoryChoicesEncountered(List<Choice> choices) {
-		if (choices.Count > buttons.Count) {
-			Debug.LogWarning(string.Format("Not enough buttons to display the current number of choices. Need %i, have %i.", choices.Count, buttons.Count));
+		if (view.choices.Count > buttons.Count) {
+			Debug.LogWarning(string.Format("Not enough buttons to display the current number of choices. Need %i, have %i.", view.choices.Count, buttons.Count));
 		}
 
 		for (int buttonIndex = 0; buttonIndex < buttons.Count; ++buttonIndex) {
-			if (buttonIndex < choices.Count) {
+			if (buttonIndex < view.choices.Count) {
 				buttons[buttonIndex].gameObject.SetActive(true);
-				buttons[buttonIndex].text = choices[buttonIndex].text;
-				buttons[buttonIndex].choiceIndex = choices[buttonIndex].index;
+				buttons[buttonIndex].text = view.choices[buttonIndex].text;
+				buttons[buttonIndex].choiceIndex = view.choices[buttonIndex].index;
+				buttons[buttonIndex].ButtonClicked = OnButtonClicked;
 
 			} else {
 				buttons[buttonIndex].gameObject.SetActive(false);
@@ -35,7 +31,7 @@ public class StoryButtonManager : MonoBehaviour {
 		}
 	}
 
-	public void OnButtonClicked(StoryButton button) {
-		reader.ChooseOption(button.choiceIndex);
+	void OnButtonClicked(StoryButton button) {
+		reader.ChooseChoice(button.choiceIndex);
 	}
 }
