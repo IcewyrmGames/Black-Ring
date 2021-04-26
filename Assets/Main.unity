@@ -400,7 +400,6 @@ GameObject:
   m_Component:
   - component: {fileID: 166776980}
   - component: {fileID: 166776979}
-  - component: {fileID: 166776981}
   m_Layer: 0
   m_Name: Reader
   m_TagString: Untagged
@@ -425,79 +424,7 @@ MonoBehaviour:
   useMaximalContinue: 0
   storyUpdated:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1857410414}
-        m_TargetAssemblyTypeName: NameTag, Assembly-CSharp
-        m_MethodName: OnStoryUpdated
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 166776981}
-        m_TargetAssemblyTypeName: StoryPanelSwitcher, Assembly-CSharp
-        m_MethodName: OnStoryUpdated
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1646071656}
-        m_TargetAssemblyTypeName: StoryWindow, Assembly-CSharp
-        m_MethodName: OnStoryUpdated
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 934219263}
-        m_TargetAssemblyTypeName: StoryButtonManager, Assembly-CSharp
-        m_MethodName: OnStoryUpdated
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 449723175}
-        m_TargetAssemblyTypeName: StoryTagImageSwitcher, Assembly-CSharp
-        m_MethodName: OnStoryUpdated
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1171211649}
-        m_TargetAssemblyTypeName: StoryTagImageSwitcher, Assembly-CSharp
-        m_MethodName: OnStoryUpdated
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   storyEnded:
     m_PersistentCalls:
       m_Calls: []
@@ -517,20 +444,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &166776981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 166776978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32577c3cea71b482fb4c30b592098a4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textPanel: {fileID: 1480574485}
-  choicesPanel: {fileID: 934219257}
 --- !u!1001 &236319488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -905,6 +818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b10d812255d4fa1b15064a425afda3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reader: {fileID: 166776979}
   imageComponent: {fileID: 449723173}
   tagPrefix: head
   sprites:
@@ -1492,7 +1406,6 @@ GameObject:
   - component: {fileID: 934219258}
   - component: {fileID: 934219259}
   - component: {fileID: 934219262}
-  - component: {fileID: 934219263}
   m_Layer: 5
   m_Name: ChoicesPanel
   m_TagString: Untagged
@@ -1558,25 +1471,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934219257}
   m_CullTransparentMesh: 1
---- !u!114 &934219263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 934219257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 205bb427ea30c4b26901da701444c81e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reader: {fileID: 166776979}
-  buttons:
-  - {fileID: 2032795770}
-  - {fileID: 1485202845}
-  - {fileID: 154264593}
-  - {fileID: 454367269}
-  - {fileID: 236319490}
 --- !u!1 &967494679
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,6 +1655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b10d812255d4fa1b15064a425afda3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reader: {fileID: 166776979}
   imageComponent: {fileID: 1171211646}
   tagPrefix: background
   sprites:
@@ -2061,19 +1956,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 166776979}
-        m_TargetAssemblyTypeName: IceWyrm.StoryReader, Assembly-CSharp
-        m_MethodName: Continue
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1001 &1485202843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2365,7 +2248,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reader: {fileID: 166776979}
-  textComponent: {fileID: 897981053}
+  contentTextComponent: {fileID: 897981053}
+  buttons:
+  - {fileID: 2032795770}
+  - {fileID: 1485202845}
+  - {fileID: 154264593}
+  - {fileID: 454367269}
+  - {fileID: 236319490}
+  namePanel: {fileID: 1857410409}
+  nameTextComponent: {fileID: 925963644}
+  contentTextPanel: {fileID: 1480574485}
+  choicesPanel: {fileID: 934219257}
+  continueButton: {fileID: 1480574488}
 --- !u!1 &1857410409
 GameObject:
   m_ObjectHideFlags: 0
@@ -2378,7 +2272,6 @@ GameObject:
   - component: {fileID: 1857410413}
   - component: {fileID: 1857410412}
   - component: {fileID: 1857410411}
-  - component: {fileID: 1857410414}
   - component: {fileID: 1857410416}
   - component: {fileID: 1857410415}
   m_Layer: 5
@@ -2466,21 +2359,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1857410409}
   m_CullTransparentMesh: 1
---- !u!114 &1857410414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857410409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb16d4820f3d4102838cc6bde9b3cf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textComponent: {fileID: 925963644}
-  currentName: Maggie
-  isShowingText: 0
 --- !u!114 &1857410415
 MonoBehaviour:
   m_ObjectHideFlags: 0

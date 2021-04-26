@@ -10,11 +10,17 @@ public class StoryTagImageSwitcher : MonoBehaviour {
 		public Sprite sprite;
 	}
 
+	[SerializeField] IceWyrm.StoryReader reader;
+
 	public Image imageComponent;
 	public string tagPrefix;
 	public SpriteNamePair[] sprites;
 
 	static char[] tagSplitSeparator = new char[]{ '_' };
+
+	public void Start() {
+		reader.storyUpdated.AddListener(OnStoryUpdated);
+	}
 
 	public void OnStoryUpdated(IceWyrm.StoryView view) {
 		foreach (string tag in view.tags) {
@@ -29,6 +35,15 @@ public class StoryTagImageSwitcher : MonoBehaviour {
 						return;
 					}
 				}
+			}
+		}
+	}
+
+	[UnityEditor.Callbacks.DidReloadScripts]
+	static void OnHotReload() {
+		if (Application.isPlaying) {
+			foreach (StoryTagImageSwitcher component in GameObject.FindObjectsOfType<StoryTagImageSwitcher>()) {
+				component.Start();
 			}
 		}
 	}

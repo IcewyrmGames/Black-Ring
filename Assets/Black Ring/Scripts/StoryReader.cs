@@ -41,6 +41,11 @@ namespace IceWyrm {
 			}
 		}
 
+		public StoryView GetCurrentView() {
+			if (story) return new StoryView(story.currentText, story.currentTags, choices);
+			else return default(StoryView);
+		}
+
 		//Continue the current thread of the story. Broadcasts information about the new position in the story.
 		public void Continue() {
 			choices.Clear();
