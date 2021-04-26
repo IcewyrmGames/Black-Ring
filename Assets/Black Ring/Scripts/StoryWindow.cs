@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 
+[HotReloadInvokable]
 public class StoryWindow : MonoBehaviour {
 	[SerializeField] IceWyrm.StoryReader reader;
 
@@ -24,6 +25,10 @@ public class StoryWindow : MonoBehaviour {
 
 		reader.storyUpdated.AddListener(OnStoryUpdated);
 		OnStoryUpdated(reader.GetCurrentView());
+	}
+
+	public void OnHotReload() {
+		Start();
 	}
 
 	public void OnStoryUpdated(IceWyrm.StoryView view) {
@@ -81,14 +86,5 @@ public class StoryWindow : MonoBehaviour {
 
 	void OnContinueClicked() {
 		reader.Continue();
-	}
-
-	[UnityEditor.Callbacks.DidReloadScripts]
-	static void OnHotReload() {
-		if (Application.isPlaying) {
-			foreach (StoryWindow component in GameObject.FindObjectsOfType<StoryWindow>()) {
-				component.Start();
-			}
-		}
 	}
 }

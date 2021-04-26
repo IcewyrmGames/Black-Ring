@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[HotReloadInvokable]
 public class StoryTagImageSwitcher : MonoBehaviour {
 	[System.Serializable]
 	public struct SpriteNamePair {
@@ -22,6 +23,10 @@ public class StoryTagImageSwitcher : MonoBehaviour {
 		reader.storyUpdated.AddListener(OnStoryUpdated);
 	}
 
+	void OnHotReload() {
+		Start();
+	}
+
 	public void OnStoryUpdated(IceWyrm.StoryView view) {
 		foreach (string tag in view.tags) {
 			string[] splitTag = tag.Split(tagSplitSeparator);
@@ -35,15 +40,6 @@ public class StoryTagImageSwitcher : MonoBehaviour {
 						return;
 					}
 				}
-			}
-		}
-	}
-
-	[UnityEditor.Callbacks.DidReloadScripts]
-	static void OnHotReload() {
-		if (Application.isPlaying) {
-			foreach (StoryTagImageSwitcher component in GameObject.FindObjectsOfType<StoryTagImageSwitcher>()) {
-				component.Start();
 			}
 		}
 	}
