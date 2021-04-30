@@ -27,7 +27,7 @@ public class StoryTagImageSwitcher : MonoBehaviour {
 		Start();
 	}
 
-	public void OnStoryUpdated(IceWyrm.StoryView view) {
+	void OnStoryUpdated(IceWyrm.StoryView view) {
 		foreach (string tag in view.tags) {
 			string[] splitTag = tag.Split(tagSplitSeparator);
 

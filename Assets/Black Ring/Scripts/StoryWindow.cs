@@ -27,11 +27,11 @@ public class StoryWindow : MonoBehaviour {
 		OnStoryUpdated(reader.GetCurrentView());
 	}
 
-	public void OnHotReload() {
+	void OnHotReload() {
 		Start();
 	}
 
-	public void OnStoryUpdated(IceWyrm.StoryView view) {
+	void OnStoryUpdated(IceWyrm.StoryView view) {
 		if (view.ContainsChoices()) {
 			contentTextPanel.SetActive(false);
 			namePanel.SetActive(false);
