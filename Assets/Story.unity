@@ -862,7 +862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db97b4063ff604923abdb7892d52ffdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  compiledStory: {fileID: 4900000, guid: 48b3f29fe72cf4945b5fa1a14f585c66, type: 3}
+  compiledStory: {fileID: 4900000, guid: 10f8d2d5371fa4a0baed8c85c2bfcbee, type: 3}
   playOnStart: 1
   useMaximalContinue: 0
   storyUpdated:
