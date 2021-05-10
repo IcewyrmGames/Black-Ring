@@ -19,7 +19,7 @@ public class StoryWindow : MonoBehaviour {
 
 	public void Start() {
 		foreach (StoryButton button in buttons) {
-			button.ButtonClicked = OnButtonClicked;
+			button.buttonClicked = OnButtonClicked;
 		}
 		continueButton.onClick.AddListener(OnContinueClicked);
 

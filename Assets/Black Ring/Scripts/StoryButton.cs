@@ -16,7 +16,7 @@ public class StoryButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 	[SerializeField] Color backgroundHoverColor = Color.black;
 
     public delegate void ClickedDelegate(StoryButton button);
-	public ClickedDelegate ButtonClicked;
+	public ClickedDelegate buttonClicked;
 
 	public string text {
 		get{ return textComponent.text; }
@@ -52,6 +52,6 @@ public class StoryButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 	}
 
 	void IPointerClickHandler.OnPointerClick(PointerEventData eventData) {
-		ButtonClicked.Invoke(this);
+		buttonClicked.Invoke(this);
 	}
 }
