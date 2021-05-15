@@ -4,14 +4,28 @@ using TMPro;
 using System.Collections.Generic;
 
 public class StoryUI : MonoBehaviour {
+	[System.Serializable]
+	public struct TextBoxPrefixPair {
+		public string prefix;
+		public StoryScrollTextBox textBox;
+	}
+
 	[SerializeField] IceWyrm.StoryReader reader;
 
+	[Header("Elements")]
 	[SerializeField] GameObject textBoxPanel;
 	[SerializeField] GameObject choicesPanel;
 	[SerializeField] Button continueButton;
 
-	[SerializeField] StoryScrollTextBox textBoxPrefab;
+	[Header("Prefab Pieces")]
+	//The default text box used when a more specific one cannot be found
+	[SerializeField] StoryScrollTextBox defaultTextBoxPrefab;
+	//The text boxes to use for each prefix in the story text
+	[SerializeField] List<TextBoxPrefixPair> textBoxPrefabs;
+	//The prefab to create for each choice button
 	[SerializeField] StoryButton buttonPrefab;
+
+	[Header("Behavior")]
 	[SerializeField] uint precreatedButtonCount = 3;
 	[SerializeField] float textSettleDuration = 0.2f;
 
@@ -64,12 +78,14 @@ public class StoryUI : MonoBehaviour {
 		} else {
 			choicesPanel.SetActive(false);
 			continueButton.gameObject.SetActive(true);
-			AddTextBox(view.text);
+			AddTextBox(view.prefix, view.text);
 		}
 	}
 
-	void AddTextBox(string text) {
-		StoryScrollTextBox block = Instantiate(textBoxPrefab, Vector3.zero, Quaternion.identity);
+	void AddTextBox(string prefix, string text) {
+		StoryScrollTextBox prefab = FindTextBoxPrefab(prefix);
+
+		StoryScrollTextBox block = Instantiate(prefab, Vector3.zero, Quaternion.identity);
 		block.transform.SetParent(textBoxPanel.transform, false);
 		block.text = text;
 		textBoxes.Add(block);
@@ -112,5 +128,14 @@ public class StoryUI : MonoBehaviour {
 
 	void OnChoiceButtonClicked(StoryButton button) {
 		reader.ChooseChoice(button.choiceIndex);
+	}
+
+	StoryScrollTextBox FindTextBoxPrefab(string prefix) {
+		int index = textBoxPrefabs.FindIndex(0, (TextBoxPrefixPair pair) => { return pair.prefix == prefix; });
+		if (index >= 0) {
+			return textBoxPrefabs[index].textBox;
+		} else {
+			return defaultTextBoxPrefab;
+		}
 	}
 }

@@ -41,9 +41,33 @@ namespace IceWyrm {
 			}
 		}
 
+		void ISerializationCallbackReceiver.OnBeforeSerialize() {
+#if UNITY_EDITOR
+			if (story != null) {
+				reloadSerializedData = story.state.ToJson();
+			} else {
+				reloadSerializedData = null;
+			}
+#endif
+		}
+
+		void ISerializationCallbackReceiver.OnAfterDeserialize() {
+#if UNITY_EDITOR
+			if (InitStory(reloadStoryText)) {
+				if (!string.IsNullOrEmpty(reloadSerializedData)) {
+					story.state.LoadJson(reloadSerializedData);
+				}
+			}
+#endif
+		}
+
 		public StoryView GetCurrentView() {
-			if (story) return new StoryView(story.currentText, story.currentTags, choices);
-			else return default(StoryView);
+			if (story) {
+				var (prefix, text) = ExtractPrefix(story.currentText);
+				return new StoryView(prefix, text, story.currentTags, choices);
+			} else {
+				return default(StoryView);
+			}
 		}
 
 		//Continue the current thread of the story. Broadcasts information about the new position in the story.
@@ -55,17 +79,21 @@ namespace IceWyrm {
 				if (useMaximalContinue) story.ContinueMaximally();
 				else story.Continue();
 
-				StoryView view = new StoryView(story.currentText, story.currentTags, choices);
+				var (prefix, text) = ExtractPrefix(story.currentText);
+
+				StoryView view = new StoryView(prefix, text, story.currentTags, choices);
 				storyUpdated.Invoke(view);
 
 			//If we can't continue but have choices, we're waiting to select a choice. This information won't change until a choice is actually selected.
 			} else if (story.currentChoices.Count > 0) {
 				//Collect minimal information about the choices we have right now
 				foreach (Choice choice in story.currentChoices) {
-					choices.Add(new StoryChoice(choice.text, choice.index));
+					var (choicePrefix, choiceText) = ExtractPrefix(choice.text);
+					choices.Add(new StoryChoice(choicePrefix, choiceText, choice.index));
 				}
 
-				StoryView view = new StoryView(story.currentText, story.currentTags, choices);
+				var (prefix, text) = ExtractPrefix(story.currentText);
+				StoryView view = new StoryView(prefix, text, story.currentTags, choices);
 				storyUpdated.Invoke(view);
 
 			//We can't continue and have no choices, so the story has reached the end of a branch.
@@ -102,24 +130,15 @@ namespace IceWyrm {
 			else Debug.LogError(message);
 		}
 
-		void ISerializationCallbackReceiver.OnBeforeSerialize() {
-#if UNITY_EDITOR
-			if (story != null) {
-				reloadSerializedData = story.state.ToJson();
-			} else {
-				reloadSerializedData = null;
-			}
-#endif
-		}
-
-		void ISerializationCallbackReceiver.OnAfterDeserialize() {
-#if UNITY_EDITOR
-			if (InitStory(reloadStoryText)) {
-				if (!string.IsNullOrEmpty(reloadSerializedData)) {
-					story.state.LoadJson(reloadSerializedData);
+		(string prefix, string text) ExtractPrefix(string original) {
+			string[] sections = original.Split(new string[]{": "}, 2, System.StringSplitOptions.RemoveEmptyEntries);
+			if (sections.Length == 2) {
+				if (!sections[0].Contains(" ")) {
+					return (sections[0], sections[1]);
 				}
 			}
-#endif
+
+			return (string.Empty, original);
 		}
 	}
 }
