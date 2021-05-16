@@ -371,13 +371,6 @@ MonoBehaviour:
   textBoxPanel: {fileID: 405162524}
   choicesPanel: {fileID: 1430284107}
   continueButton: {fileID: 785853721}
-  buttonPrefab: {fileID: 5617983165221405984, guid: acaa02e040592435cb91f02f13109bec,
-    type: 3}
-  precreatedButtonCount: 3
-  textSettleDuration: 0.2
-  textBoxes: []
-  buttons: []
-  latestTextBox: {fileID: 0}
   defaultTextBoxPrefab: {fileID: 2569649903853944561, guid: ff9b108de2f5c4ddfb6fcfac5d869a16,
     type: 3}
   textBoxPrefabs:
@@ -387,6 +380,13 @@ MonoBehaviour:
   - prefix: s
     textBox: {fileID: 6233899158247922453, guid: f2e0a349a9dd14b11a934a856b5b846d,
       type: 3}
+  buttonPrefab: {fileID: 5617983165221405984, guid: acaa02e040592435cb91f02f13109bec,
+    type: 3}
+  precreatedButtonCount: 3
+  textSettleDuration: 0.2
+  textBoxes: []
+  buttons: []
+  latestTextBox: {fileID: 0}
 --- !u!1 &765585959
 GameObject:
   m_ObjectHideFlags: 0
