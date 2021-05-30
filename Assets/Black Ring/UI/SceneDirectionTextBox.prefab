@@ -129,6 +129,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneDirectionTextBox
       objectReference: {fileID: 0}
+    - target: {fileID: 2569649903853944560, guid: ff9b108de2f5c4ddfb6fcfac5d869a16,
+        type: 3}
+      propertyPath: m_Padding.m_Left
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569649903853944560, guid: ff9b108de2f5c4ddfb6fcfac5d869a16,
+        type: 3}
+      propertyPath: m_Padding.m_Right
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2569649904980084544, guid: ff9b108de2f5c4ddfb6fcfac5d869a16,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2569649904980084545, guid: ff9b108de2f5c4ddfb6fcfac5d869a16,
         type: 3}
       propertyPath: m_AnchorMax.y
