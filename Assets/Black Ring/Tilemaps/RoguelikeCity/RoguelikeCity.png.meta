@@ -3110,6 +3110,9 @@ TextureImporter:
   - first:
       213: 44910605318606095
     second: RoguelikeCity_1035
+  - first:
+      213: 7946524649204582810
+    second: RoguelikeCity_1036
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -3175,8 +3178,8 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 1024
     resizeAlgorithm: 0
-    textureFormat: 4
-    textureCompression: 1
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -3187,8 +3190,8 @@ TextureImporter:
     buildTarget: Standalone
     maxTextureSize: 1024
     resizeAlgorithm: 0
-    textureFormat: 4
-    textureCompression: 1
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -24950,6 +24953,27 @@ TextureImporter:
       bones: []
       spriteID: f0dc9a425fd8f9000800000000000000
       internalID: 44910605318606095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoguelikeCity_1036
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 628
+        height: 475
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9989b2e01ab74e60800000000000000
+      internalID: 7946524649204582810
       vertices: []
       indices: 
       edges: []
