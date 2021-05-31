@@ -16,6 +16,7 @@ public class StoryUI : MonoBehaviour {
 	[SerializeField] GameObject textBoxPanel;
 	[SerializeField] GameObject choicesPanel;
 	[SerializeField] Button continueButton;
+	[SerializeField] GameObject blur;
 
 	[Header("Prefab Pieces")]
 	//The default text box used when a more specific one cannot be found
@@ -35,6 +36,7 @@ public class StoryUI : MonoBehaviour {
 
 	public void Start() {
 		reader.storyUpdated.AddListener(OnStoryUpdated);
+		reader.storyEnded.AddListener(OnStoryEnded);
 		continueButton.onClick.AddListener(OnContinueButtonClicked);
 
 		//Hide any existing text boxes, which may be present for testing UI layouts in the editor.
@@ -59,11 +61,17 @@ public class StoryUI : MonoBehaviour {
 			CreateChoiceButton();
 		}
 
-		OnStoryUpdated(reader.GetCurrentView());
+		//Set the initial state of this UI based on whether the story is currently in progress.
+		if (reader.isInProgress) {
+			OnStoryUpdated(reader.GetCurrentView());
+		} else {
+			OnStoryEnded();
+		}
 	}
 
 	void OnHotReload() {
 		reader.storyUpdated.AddListener(OnStoryUpdated);
+		reader.storyEnded.AddListener(OnStoryEnded);
 		continueButton.onClick.AddListener(OnContinueButtonClicked);
 		foreach (StoryButton button in buttons) {
 			button.buttonClicked = OnChoiceButtonClicked;
@@ -71,6 +79,9 @@ public class StoryUI : MonoBehaviour {
 	}
 
 	public void OnStoryUpdated(IceWyrm.StoryView view) {
+		gameObject.SetActive(true);
+		blur.SetActive(true);
+
 		if (view.ContainsChoices()) {
 			choicesPanel.SetActive(true);
 			continueButton.gameObject.SetActive(false);
@@ -80,6 +91,11 @@ public class StoryUI : MonoBehaviour {
 			continueButton.gameObject.SetActive(true);
 			AddTextBox(view.prefix, view.text);
 		}
+	}
+
+	public void OnStoryEnded() {
+		gameObject.SetActive(false);
+		blur.SetActive(false);
 	}
 
 	void AddTextBox(string prefix, string text) {

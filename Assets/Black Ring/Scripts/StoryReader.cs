@@ -4,7 +4,10 @@ using Ink.Runtime;
 using System.Collections.Generic;
 
 namespace IceWyrm {
+	[HotReloadInvokable]
 	public class StoryReader : MonoBehaviour, ISerializationCallbackReceiver {
+		static public StoryReader instance { get; private set; }
+
 		//The compiled JSON text that describes the story
 		[SerializeField] TextAsset compiledStory;
 
@@ -17,6 +20,8 @@ namespace IceWyrm {
 		Story story;
 		//The current choices, which are parsed from the story
 		List<StoryChoice> choices = new List<StoryChoice>();
+		//Whether the story is currently in progress, or has been ended
+		public bool isInProgress { get; private set; }
 
 		//Fired when the story is updated in some way
 		public StoryViewEvent storyUpdated;
@@ -41,6 +46,17 @@ namespace IceWyrm {
 			}
 		}
 
+		void OnEnable() {
+			if (instance) {
+				Debug.LogError("Multiple StoryReader components exist in the current scenes. They may interfere with each other.");
+			}
+			instance = this;
+		}
+
+		void OnDisable() {
+			instance = null;
+		}
+
 		void ISerializationCallbackReceiver.OnBeforeSerialize() {
 #if UNITY_EDITOR
 			if (story != null) {
@@ -61,6 +77,10 @@ namespace IceWyrm {
 #endif
 		}
 
+		void OnHotReload() {
+			instance = this;
+		}
+
 		public StoryView GetCurrentView() {
 			if (story) {
 				var (prefix, text) = ExtractPrefix(story.currentText);
@@ -76,6 +96,8 @@ namespace IceWyrm {
 
 			//canContinue means we can generate more story text, so if that's the case we'll update with new text and tags but not choices
 			if (story.canContinue) {
+				isInProgress = true;
+
 				if (useMaximalContinue) story.ContinueMaximally();
 				else story.Continue();
 
@@ -86,6 +108,8 @@ namespace IceWyrm {
 
 			//If we can't continue but have choices, we're waiting to select a choice. This information won't change until a choice is actually selected.
 			} else if (story.currentChoices.Count > 0) {
+				isInProgress = true;
+
 				//Collect minimal information about the choices we have right now
 				foreach (Choice choice in story.currentChoices) {
 					var (choicePrefix, choiceText) = ExtractPrefix(choice.text);
@@ -98,6 +122,7 @@ namespace IceWyrm {
 
 			//We can't continue and have no choices, so the story has reached the end of a branch.
 			} else {
+				isInProgress = false;
 				storyEnded.Invoke();
 			}
 		}
@@ -113,6 +138,11 @@ namespace IceWyrm {
 
 		public void JumpToStitch(string stitch) {
 			story.ChoosePathString(stitch);
+			Continue();
+		}
+
+		public bool HasPlayedStitch(string stitch) {
+			return story.state.VisitCountAtPathString(stitch) > 0;
 		}
 
 		//Create a new story object for the compiled story, which will reset all state and progress.
