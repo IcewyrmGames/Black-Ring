@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3084329539
+    locked: 0
+  - name: Roads
+    uniqueID: 3866398635
+    locked: 0
+  - name: Foliage
+    uniqueID: 1565464293
+    locked: 0
+  - name: Decor
+    uniqueID: 1872746335
+    locked: 0
