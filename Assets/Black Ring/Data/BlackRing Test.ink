@@ -1,7 +1,7 @@
 
 // THINGS TO NOTE/QUESTIONS
 /*
-    - Do we want to make use of quotations?
+    - Do we want to make use of quotations?: Quotations will be shown in the text and are not necessary
     - Is an emotion tag required? Or shall we always use a default character asset if an emotion tag is not specified?
     -     * p: [ Poke her shoulder ] Would something like this require a character prefix? To denote who does an action? Also it would it be p: [ Poke her shoulder ] not [ p: Poke her shoulder ]? Note how 'p:' produces a new line at the "Poke her shoulder" option
     - Note that while making a loop id you say "no" to dying a horrible death it removes the option to say no on the next go
@@ -12,12 +12,62 @@
     surprise, happy, angry
 */
 
+// EMOTIONS LIST
+/*
+    frustrated, concerned, confused, smug
+*/
 // FUNCTIONALITY USED
 /*
     https://github.com/inkle/ink/blob/master/Documentation/WritingWithInk.md
     - prefixes, tags, comments, multiple choices, knots, diverts, glue, loops, stitches
 */
 
+
+// KNOTS, STITCHES
+/*
+    - Each dateable character has their own knot.
+*/
+
+s: Welcome to BlackRing!
+    -> testmenu
+
+=== testmenu ===
+
+s: Time to start the test story! Which character's storyline would you like to test?
+
+    * s: JUG
+    -> JUG
+    * s: MAG
+    -> MAG
+    * s: THO
+    -> THO
+    * s: ZHA
+    -> ZHA
+    * s: MIL
+    -> MIL
+    * s: Original testscript 
+    -> testscript
+
+=== JUG ===
+    -> charactertesting
+    
+=== MAG ===
+    -> charactertesting
+    
+=== THO ===
+    -> charactertesting
+
+=== ZHA === 
+    -> charactertesting
+    
+=== MIL ===
+    -> charactertesting
+    
+=== charactertesting ===
+s: You have finished this character's test storyline. Returning to the test menu. 
+    -> testmenu
+
+=== testscript ===
 s: You make your way to her house. 
     -> bedhead
 
